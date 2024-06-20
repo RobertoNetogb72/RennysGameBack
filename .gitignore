@@ -1,0 +1,10 @@
+Migrations
+.vscode
+bin
+Properties
+obj
+appsettings.json
+backend.csproj
+backend.sln
+backend.http
+
