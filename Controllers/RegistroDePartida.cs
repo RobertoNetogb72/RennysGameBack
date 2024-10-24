@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using backend.Context;
 using backend.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -94,7 +95,107 @@ namespace backend.Controllers
         return NoContent();
     }
 
-
+[HttpGet("rankingVitoria")]
+public async Task<IActionResult> GetRankingVitoria()
+{
+    var ranking = await _context.RegistroDePartidas
+        .Include(p => p.Cadastro) // Certifica-se de carregar o Cadastro relacionado
+        .OrderByDescending(p => p.qntVitoria)
+        .Select(p => new
+        {
+            Usuario = p.Cadastro != null ? p.Cadastro.nickname : "Desconhecido",
+            Partidas = p.qntPartida,
+            Vitorias = p.qntVitoria,
+            Derrotas = p.qntDerrota,    
+            Empate =  p.qntEmpate
+        })
+        .ToListAsync();
+ 
+    // Aqui, você pode usar o ILogger ou Console.WriteLine para verificar o que está sendo retornado
+    foreach (var item in ranking)
+    {
+        Console.WriteLine($"Usuario: {item.Usuario}, Partidas: {item.Partidas}, Vitorias: {item.Vitorias}, Derrotas: {item.Derrotas}, Empate: {item.Empate}");
+    }
+ 
+    return Ok(ranking);
+}
+[HttpGet("rankingPart")]
+public async Task<IActionResult> GetRankingPart()
+{
+    var ranking = await _context.RegistroDePartidas
+        .Include(p => p.Cadastro) // Certifica-se de carregar o Cadastro relacionado
+        .OrderByDescending(p => p.qntPartida)
+        .Select(p => new
+        {
+            Usuario = p.Cadastro != null ? p.Cadastro.nickname : "Desconhecido",
+            Partidas = p.qntPartida,
+            Vitorias = p.qntVitoria,
+            Derrotas = p.qntDerrota,    
+            Empate =  p.qntEmpate
+        })
+        .ToListAsync();
+ 
+    // Aqui, você pode usar o ILogger ou Console.WriteLine para verificar o que está sendo retornado
+    foreach (var item in ranking)
+    {
+        Console.WriteLine($"Usuario: {item.Usuario}, Partidas: {item.Partidas}, Vitorias: {item.Vitorias}, Derrotas: {item.Derrotas}, Empate: {item.Empate}");
+    }
+ 
+    return Ok(ranking);
 
 }
+
+[HttpGet("rankingDer")]
+public async Task<IActionResult> GetRankingDer()
+{
+    var ranking = await _context.RegistroDePartidas
+        .Include(p => p.Cadastro) // Certifica-se de carregar o Cadastro relacionado
+        .OrderByDescending(p => p.qntDerrota)
+        .Select(p => new
+        {
+            Usuario = p.Cadastro != null ? p.Cadastro.nickname : "Desconhecido",
+            Partidas = p.qntPartida,
+            Vitorias = p.qntVitoria,
+            Derrotas = p.qntDerrota,    
+            Empate =  p.qntEmpate
+        })
+        .ToListAsync();
+ 
+    // Aqui, você pode usar o ILogger ou Console.WriteLine para verificar o que está sendo retornado
+    foreach (var item in ranking)
+    {
+        Console.WriteLine($"Usuario: {item.Usuario}, Partidas: {item.Partidas}, Vitorias: {item.Vitorias}, Derrotas: {item.Derrotas}, Empate: {item.Empate}");
+    }
+ 
+    return Ok(ranking);
+
 }
+
+[HttpGet("rankingEmpate")]
+public async Task<IActionResult> GetRankingEmpate()
+{
+    var ranking = await _context.RegistroDePartidas
+        .Include(p => p.Cadastro) // Certifica-se de carregar o Cadastro relacionado
+        .OrderByDescending(p => p.qntEmpate)
+        .Select(p => new
+        {
+            Usuario = p.Cadastro != null ? p.Cadastro.nickname : "Desconhecido",
+            Partidas = p.qntPartida,
+            Vitorias = p.qntVitoria,
+            Derrotas = p.qntDerrota,    
+            Empate =  p.qntEmpate
+        })
+        .ToListAsync();
+ 
+    // Aqui, você pode usar o ILogger ou Console.WriteLine para verificar o que está sendo retornado
+    foreach (var item in ranking)
+    {
+        Console.WriteLine($"Usuario: {item.Usuario}, Partidas: {item.Partidas}, Vitorias: {item.Vitorias}, Derrotas: {item.Derrotas}, Empate: {item.Empate}");
+    }
+ 
+    return Ok(ranking);
+
+}
+
+
+    }}
